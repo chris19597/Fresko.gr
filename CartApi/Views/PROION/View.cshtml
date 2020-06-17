@@ -67,24 +67,25 @@
         </tr>
         <tr>
             <td>
-                <select id="item">
+                <select class="form-control" id="item">
                     @foreach (var i in Model)
                     {
-                        <option value="@i.Name">@i.Name</option>
+                        <option class="form-control" value="@i.Name">@i.Name</option>
                     }
                 </select>
             </td>
             <td>
-            <input id="quantity" type="text"/>
+                <input class="form-control" id="quantity" type="text" />
         </tr>
-        <button class="btn btn-danger" type="submit" id="addtocart">Προσθήκη στο Καλάθι</button>
+
     </table>
+    <button class="btn btn-success" type="submit" id="addtocart">Προσθήκη στο Καλάθι</button>
 </form>
 <h2>Καλάθι αγορών</h2>
 <div id="results">
 
 </div>
-<button class="btn btn-default" type="button" id="calculate">Υπολογισμός και παραγγελία</button>
+<button class="btn btn-success" type="button" id="calculate">Υπολογισμός και παραγγελία</button>
 <script>
     var itemlist = [];
     var quantitylist = [];
@@ -128,7 +129,7 @@
                         location.reload();
                         return;
                     }
-                    alert("Συνολο" + data.price);
+                    alert("To σύνολο σας είναι: " + data.price + " Ευρώ.");
                     location.reload();
                 }
 

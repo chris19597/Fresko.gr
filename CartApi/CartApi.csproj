@@ -191,6 +191,8 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Classes\Temp.cs" />
     <Compile Include="Context.cs" />
+    <Compile Include="Controllers\CardhistoriesApiController.cs" />
+    <Compile Include="Controllers\CardsApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PROIONController.cs" />
     <Compile Include="Controllers\ProionsApiController.cs" />
