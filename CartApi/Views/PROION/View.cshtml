@@ -1,0 +1,138 @@
+﻿@using CartApi.Models
+@model IEnumerable<CartApi.Models.Proion>
+
+@{
+    ViewBag.Title = "View";
+    var _tobuy = new List<Proion>();
+}
+
+<h2>Διαθέσιμα Προιόντα</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Qantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Qantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+
+            </td>
+
+        </tr>
+    }
+
+
+</table>
+
+
+<form id="form">
+
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Qantity)
+            </th>
+            <th></th>
+        </tr>
+        <tr>
+            <td>
+                <select id="item">
+                    @foreach (var i in Model)
+                    {
+                        <option value="@i.Name">@i.Name</option>
+                    }
+                </select>
+            </td>
+            <td>
+            <input id="quantity" type="text"/>
+        </tr>
+        <button class="btn btn-danger" type="submit" id="addtocart">Προσθήκη στο Καλάθι</button>
+    </table>
+</form>
+<h2>Καλάθι αγορών</h2>
+<div id="results">
+
+</div>
+<button class="btn btn-default" type="button" id="calculate">Υπολογισμός και παραγγελία</button>
+<script>
+    var itemlist = [];
+    var quantitylist = [];
+    $("#form").submit(function(event) {
+        event.preventDefault();
+        $("#results").empty();
+        var item = $("#item").val();
+        var quantity = $("#quantity").val();
+        itemlist.push(item);
+        quantitylist.push(quantity);
+        var $table = $("<table class='table table-bordered'></table>");
+        var $head = $("<thead></thead>");
+        var $line = $("<tr></tr>");
+        $line.append($("<th scope='col'></td>").html("Όνομα"));
+        $line.append($("<th scope='col'></td>").html("Ποσότητα"));
+        for (var i = 0; i < itemlist.length; i++) {
+            var $line = $("<tr></tr>");
+            $line.append($("<td scope='row'></td>").html(itemlist[i]));
+            $line.append($("<td scope='row'></td>").html(quantitylist[i]));
+            $table.append($line);
+
+        }
+        $table.appendTo($("#results"));
+
+
+    });
+
+    $("#calculate").click(function() {
+        var _toserialize = { itemlist: itemlist, quantitylist: quantitylist };
+        var data = JSON.stringify({ 'model': _toserialize });
+        $.ajax(
+            {
+                data: data,
+                type: 'POST',
+                url: '@Url.Action("PriceCart", "PROION")',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    if (data.price == -1) {
+                        alert("Μη αποδεκτή τιμή");
+                        location.reload();
+                        return;
+                    }
+                    alert("Συνολο" + data.price);
+                    location.reload();
+                }
+
+            });
+    });
+
+</script>

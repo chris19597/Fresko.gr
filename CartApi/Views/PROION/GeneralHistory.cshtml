@@ -1,0 +1,43 @@
+﻿@model IEnumerable<CartApi.Models.Cardhistory>
+
+@{
+    ViewBag.Title = "GeneralHistory";
+}
+
+<h2>GeneralHistory</h2>
+
+@if (User.Identity.IsAuthenticated)
+{
+    if (User.Identity.Name.Contains("admin"))
+    {
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.username)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CardID)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.username)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Details", "Home", new {id = item.CardID})">@item.CardID</a>
+                    </td>
+
+                </tr>
+            }
+
+        </table>
+    }
+}
+else
+{
+    <h6>Πρέπει να είστε διαχειριστής για την προβολή της σελίδας</h6>
+}

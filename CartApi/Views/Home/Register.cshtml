@@ -1,0 +1,39 @@
+﻿@{
+    ViewBag.Title = "Register";
+}
+
+<h2>Register</h2>
+
+
+<form id="form">
+    <input id="username" placeholder="username" class="form-control"/>
+    <input type="password" id="password" placeholder="password" class="form-control"/>
+    <select class="form-control" id="role">
+        <option>Admin</option>
+        <option>Customer</option>
+    </select>
+    <button type="submit" class="btn btn-default">Login</button>
+</form>
+
+<script>
+    $("#form").submit(function(event) {
+        event.preventDefault();
+        var username = $("#username").val();
+        var password = $("#password").val();
+        var role = $("#role").val();
+        var ser = { username: username, password: password, role: role };
+        var data = JSON.stringify({ 'model': ser });
+        $.ajax(
+            {
+                data: data,
+                type: 'POST',
+                url: '@Url.Action("RegisterUs", "User")',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    alert("Συνολο" + data.price);
+                }
+
+            });
+    });
+</script>

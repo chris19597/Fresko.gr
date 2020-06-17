@@ -1,0 +1,34 @@
+﻿@model IEnumerable<CartApi.Models.Cardhistory>
+
+@{
+    ViewBag.Title = "History";
+}
+
+<h2>History</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CardID)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.username)
+            </td>
+            <td>
+                <a href="@Url.Action("Details", "Home", new {id = item.CardID})">@item.CardID</a>
+            </td>
+
+        </tr>
+    }
+
+</table>
